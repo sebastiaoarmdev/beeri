@@ -13,6 +13,11 @@ var payerCount = 1;
 var beerValuePerPayer = beerTotalValue/payerCount;
 var formattedBeerValuePerPayer = beerValuePerPayer.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
 
+const beerValueInput = document.getElementById('beerValue');
+const payerCountInput = document.getElementById('payerCount');
+const minusButton = document.getElementById('minusButton');
+const plusButton = document.getElementById('plusButton');
+
 function updateGraphicBeerTypes() {
 	let divGraphicBeerTypesInnerHTML = '';
 	for (let i = 0; i < beerTypes.length; i++) {
@@ -24,9 +29,9 @@ function updateGraphicBeerTypes() {
 
 function updateBeerType(element) {
 	beerType = element.src;
-	let types = document.getElementsByClassName('button');
-	for (let i = 0; i < types.length; i++) {
-		types[i].classList.replace('on', 'off');
+	let beerTypeButtons = document.getElementsByClassName('button');
+	for (let i = 0; i < beerTypeButtons.length; i++) {
+		beerTypeButtons[i].classList.replace('on', 'off');
 	}
 	element.classList.replace('off', 'on');
 	let beers = document.getElementsByClassName('graphicBeer');
@@ -87,8 +92,27 @@ function updatePayerCount(newValue) {
 }
 
 function start() {
-	console.log('Started');
 	updateGraphicBeerTypes();
 }
+
+beerValueInput.addEventListener('click', function(event) {
+	event.target.select();
+});
+
+beerValueInput.addEventListener('change', function(event) {
+	updateBeerValue(event.target.value);
+});
+
+payerCountInput.addEventListener('click', function(event) {
+	event.target.select();
+});
+
+payerCountInput.addEventListener('change', function(event) {
+	updatePayerCount(event.target.value);
+});
+
+minusButton.addEventListener('click', removeABeer);
+
+plusButton.addEventListener('click', addABeer);
 
 document.onload = start();
