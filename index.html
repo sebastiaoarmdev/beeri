@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="styles/main.css" />
+	<title>Beeri</title>
+</head>
+<body>
+	<h1>Beeri</h1>
+	<div id="graphicBeerTypes"></div>
+	<h2><label for="beerValue">Qual o valor unitário da birita?</label></h2>
+	<input
+		id="beerValue" 
+		type="number" 
+		step="0.01" 
+		min=0 
+		placeholder="R$" 
+		onchange="updateBeerValue(this.value)" 
+		onclick="this.select();">
+	<h2>Quantas pessoas vão pagar essa conta?</h2>
+	<input 
+		id="payerCount" 
+		type="number" 
+		step="1" 
+		min=1 
+		value="1" 
+		onchange="updatePayerCount(this.value)" 
+		onclick="this.select();">
+	<h2>Total de biritas:</h2>
+	<div id="beerCount">0</div>
+	<h2>Total a pagar:</h2>
+	<div id="beerTotal">R$ 0,00</div>
+	<h2>Total a pagar por pessoa:</h2>
+	<div id="beerValuePerPayer">R$ 0,00</div>
+	<br>
+	<img
+		src="images/minus.png"
+		alt="minus" 
+		class="button"
+		onclick="removeABeer()">
+	<img 
+		src="images/plus.png" 
+		alt="plus" 
+		class="button" 
+		onclick="addABeer()">
+	<br>
+	<br>
+	<div id="graphicBeerCount"></div>
+	<script type="text/javascript" src="scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+/* styles/main.css */
+* {
+	font-family: monospace;
+	font-size: large;
+	text-align: center;
+}
+
+img.button {
+	width: 64px;
+}
+
+img.on {
+	opacity: 1;
+}
+
+img.off {
+	opacity: 0.4;
+}
+
+img.graphicBeer {
+	width: 128px;
+}
