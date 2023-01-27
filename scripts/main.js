@@ -17,19 +17,19 @@ const beerValueInput = document.getElementById('beerValue');
 const payerCountInput = document.getElementById('payerCount');
 const minusButton = document.getElementById('minusButton');
 const plusButton = document.getElementById('plusButton');
+const beerTypeButtons = document.getElementById('graphicBeerTypes').getElementsByClassName('button');
 
 function updateGraphicBeerTypes() {
 	let divGraphicBeerTypesInnerHTML = '';
 	for (let i = 0; i < beerTypes.length; i++) {
 		let status = beerType == beerTypes[i] ? 'on' : 'off';
-		divGraphicBeerTypesInnerHTML = divGraphicBeerTypesInnerHTML + `<img src="${beerTypes[i]}" class="button ${status}" onclick="updateBeerType(this)">`;
+		divGraphicBeerTypesInnerHTML = divGraphicBeerTypesInnerHTML + `<img src="${beerTypes[i]}" class="button ${status}">`;
 	}
 	document.getElementById('graphicBeerTypes').innerHTML = divGraphicBeerTypesInnerHTML;
 }
 
 function updateBeerType(element) {
 	beerType = element.src;
-	let beerTypeButtons = document.getElementsByClassName('button');
 	for (let i = 0; i < beerTypeButtons.length; i++) {
 		beerTypeButtons[i].classList.replace('on', 'off');
 	}
@@ -110,6 +110,8 @@ payerCountInput.addEventListener('click', function(event) {
 payerCountInput.addEventListener('change', function(event) {
 	updatePayerCount(event.target.value);
 });
+
+console.log(beerTypeButtons);
 
 minusButton.addEventListener('click', removeABeer);
 
