@@ -20,50 +20,52 @@ const plusButton = document.getElementById('plusButton');
 const beerTypeButtons = document.getElementById('graphicBeerTypes').getElementsByClassName('button');
 
 function updateGraphicBeerTypes() {
-	let divGraphicBeerTypesInnerHTML = '';
-	for (let i = 0; i < beerTypes.length; i++) {
-		let status = beerType == beerTypes[i] ? 'on' : 'off';
-		divGraphicBeerTypesInnerHTML = divGraphicBeerTypesInnerHTML + `<img src="${beerTypes[i]}" class="button ${status}">`;
+	let html = '';
+	for (let source of beerTypes) {
+		let status = (beerType == source) ? 'on' : 'off';
+		html = html + `<img src="${source}" class="button ${status}">`;
 	}
-	document.getElementById('graphicBeerTypes').innerHTML = divGraphicBeerTypesInnerHTML;
+	document.getElementById('graphicBeerTypes').innerHTML = html;
 }
 
-function updateBeerType(element) {
-	beerType = element.src;
-	for (let i = 0; i < beerTypeButtons.length; i++) {
-		beerTypeButtons[i].classList.replace('on', 'off');
+function updateBeerType(source) {
+	for (let beerTypeButton of beerTypeButtons) {
+		if (beerTypeButton.src == source) {
+			beerTypeButton.classList.replace('off', 'on');
+		} else {
+			beerTypeButton.classList.replace('on', 'off');
+		}
 	}
-	element.classList.replace('off', 'on');
 	let beers = document.getElementsByClassName('graphicBeer');
-	for (let i = 0; i < beers.length; i++) {
-		beers[i].src = beerType;
+	for (let beer of beers) {
+		beer.src = source;
 	}
 }
 
 function updateBeerValuePerPayer() {
-	let divBeerValuePerPayerInnerHTML = '';
-	beerValuePerPayer = beerTotalValue/payerCount;
+	let html = '';
+	beerValuePerPayer = beerTotalValue / payerCount;
 	formattedBeerValuePerPayer = beerValuePerPayer.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
-	divBeerValuePerPayerInnerHTML = divBeerValuePerPayerInnerHTML + `${formattedBeerValuePerPayer}`;
-	document.getElementById('beerValuePerPayer').innerHTML = divBeerValuePerPayerInnerHTML;
+	html = html + `${formattedBeerValuePerPayer}`;
+	document.getElementById('beerValuePerPayer').innerHTML = html;
 }
 
 function updateBeerTotalValue() {
-	let divBeerTotalInnerHTML = '';
+	let html = '';
 	beerTotalValue = beerValue * beerCount;
 	formattedBeerTotalValue = beerTotalValue.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
-	divBeerTotalInnerHTML = formattedBeerTotalValue;
-	document.getElementById('beerTotal').innerHTML = divBeerTotalInnerHTML;
+	html = formattedBeerTotalValue;
+	document.getElementById('beerTotal').innerHTML = html;
 	updateBeerValuePerPayer();
 }
 
 function updateGraphicBeerCount() {
-	let divGraphicCountInnerHTML = '';
+	let html = '';
 	for (let i = 0; i < beerCount; i++) {
-		divGraphicCountInnerHTML = divGraphicCountInnerHTML + `<img class="graphicBeer" src="${beerType}">`;
+		html = html + `<img class="graphicBeer" src="${beerType}">`;
 	}
 	updateBeerTotalValue();
-	document.getElementById('graphicBeerCount').innerHTML = divGraphicCountInnerHTML;
+	document.getElementById('graphicBeerCount').innerHTML = html;
 	document.getElementById('beerCount').innerHTML = beerCount;
 }
 
@@ -95,26 +97,30 @@ function start() {
 	updateGraphicBeerTypes();
 }
 
-beerValueInput.addEventListener('click', function(event) {
+document.onload = start();
+
+beerValueInput.addEventListener('click', function (event) {
 	event.target.select();
 });
 
-beerValueInput.addEventListener('change', function(event) {
+beerValueInput.addEventListener('change', function (event) {
 	updateBeerValue(event.target.value);
 });
 
-payerCountInput.addEventListener('click', function(event) {
+payerCountInput.addEventListener('click', function (event) {
 	event.target.select();
 });
 
-payerCountInput.addEventListener('change', function(event) {
+payerCountInput.addEventListener('change', function (event) {
 	updatePayerCount(event.target.value);
 });
 
-console.log(beerTypeButtons);
+for (let beerTypeButton of beerTypeButtons) {
+	beerTypeButton.addEventListener('click', function (event) {
+		updateBeerType(event.target.src);
+	})
+}
 
 minusButton.addEventListener('click', removeABeer);
 
 plusButton.addEventListener('click', addABeer);
-
-document.onload = start();
