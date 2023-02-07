@@ -1,5 +1,6 @@
-var beerCount = 0;
-var beerValue = 0;
+var beerValue = parseFloat(localStorage.getItem('beerValue') ? localStorage.getItem('beerValue') : 0.0);
+var payerCount = parseInt(localStorage.getItem('payerCount') ? localStorage.getItem('payerCount') : 1);
+var beerCount = parseInt(localStorage.getItem('beerCount') ? localStorage.getItem('beerCount') : 0);
 var beerTotalValue = beerValue * beerCount;
 var formattedBeerTotalValue = beerTotalValue.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
 var beerTypes = [
@@ -8,9 +9,8 @@ var beerTypes = [
 	'images/drink.png', 
 	'images/glass.png', 
 	'images/mug.png'];
-var beerType = beerTypes[0];
-var payerCount = 1;
-var beerValuePerPayer = beerTotalValue/payerCount;
+var beerType = localStorage.getItem('beerType') ? localStorage.getItem('beerType') : beerTypes[0];
+var beerValuePerPayer = beerTotalValue / payerCount;
 var formattedBeerValuePerPayer = beerValuePerPayer.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
 
 const beerValueInput = document.getElementById('beerValue');
@@ -29,6 +29,8 @@ function updateGraphicBeerTypes() {
 }
 
 function updateBeerType(source) {
+	beerType = source.replace(location, '');
+	localStorage.setItem('beerType', beerType);
 	for (let beerTypeButton of beerTypeButtons) {
 		if (beerTypeButton.src == source) {
 			beerTypeButton.classList.replace('off', 'on');
@@ -71,6 +73,7 @@ function updateGraphicBeerCount() {
 
 function updateBeerCount(increment) {
 	beerCount = beerCount + increment;
+	localStorage.setItem('beerCount', beerCount);
 	updateGraphicBeerCount();
 }
 
@@ -86,15 +89,22 @@ function removeABeer() {
 
 function updateBeerValue(newValue) {
 	beerValue = newValue;
+	localStorage.setItem('beerValue', beerValue);
 	updateBeerTotalValue();
 }
+
 function updatePayerCount(newValue) {
 	payerCount = newValue;
+	localStorage.setItem('payerCount', payerCount);
 	updateBeerValuePerPayer();
 }
 
 function start() {
+	beerValueInput.value = beerValue;
+	payerCountInput.value = payerCount;
 	updateGraphicBeerTypes();
+	updateBeerValuePerPayer();
+	updateGraphicBeerCount();
 }
 
 document.onload = start();
