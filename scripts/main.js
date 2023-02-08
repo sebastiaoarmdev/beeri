@@ -29,7 +29,12 @@ function updateGraphicBeerTypes() {
 }
 
 function updateBeerType(source) {
-	beerType = source.replace(location, '');
+	beerType = source.replace(location.href, '');
+	if (location.protocol == 'file:') {
+		let fileName = location.href.split("/").pop();
+		let extraPath = location.href.replace(fileName, '');
+		beerType = beerType.replace(extraPath, '');
+	}
 	localStorage.setItem('beerType', beerType);
 	for (let beerTypeButton of beerTypeButtons) {
 		if (beerTypeButton.src == source) {
