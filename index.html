@@ -5,7 +5,9 @@
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<title>Beeri</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
 	<link rel="stylesheet" type="text/css" media='screen' href="styles/main.css">
+	<link rel="manifest" href="manifest.json">
 </head>
 <body>
 	<h1>Beeri</h1>
@@ -16,14 +18,14 @@
 		<img src="images/glass.png" class="button off">
 		<img src="images/mug.png" class="button off">
 	</div>
-	<h2><label for="beerValue">Qual o valor unitário da birita?</label></h2>
+	<h2><label for="beerValue">Valor unitário da birita:</label></h2>
 	<input
 		id="beerValue" 
 		type="number" 
 		step=0.01 
 		min=0 
 		placeholder="R$">
-	<h2>Quantas pessoas vão pagar essa conta?</h2>
+	<h2>Dividir a conta por:</h2>
 	<input 
 		id="payerCount" 
 		type="number" 
@@ -51,5 +53,6 @@
 	<br>
 	<div id="graphicBeerCount"></div>
 	<script type="text/javascript" src="scripts/main.js"></script>
+	<script type="text/javascript" src="scripts/app.js"></script>
 </body>
 </html>
