@@ -19,6 +19,14 @@ const minusButton = document.getElementById('minusButton');
 const plusButton = document.getElementById('plusButton');
 const beerTypeButtons = document.getElementById('graphicBeerTypes').getElementsByClassName('button');
 
+function updateBeerTypeSourceToRelativePath() {
+	let $beerType = beerType.replace(location.href, '');
+	let fileName = location.href.split("/").pop();
+	let extraPath = location.href.replace(fileName, '');
+	$beerType = $beerType.replace(extraPath, '');
+	beerType = $beerType;
+}
+
 function updateGraphicBeerTypes() {
 	let html = '';
 	for (let source of beerTypes) {
@@ -29,12 +37,7 @@ function updateGraphicBeerTypes() {
 }
 
 function updateBeerType(source) {
-	beerType = source.replace(location.href, '');
-	if (location.protocol == 'file:') {
-		let fileName = location.href.split("/").pop();
-		let extraPath = location.href.replace(fileName, '');
-		beerType = beerType.replace(extraPath, '');
-	}
+	updateBeerTypeSourceToRelativePath();
 	localStorage.setItem('beerType', beerType);
 	for (let beerTypeButton of beerTypeButtons) {
 		if (beerTypeButton.src == source) {
@@ -107,6 +110,7 @@ function updatePayerCount(newValue) {
 function start() {
 	beerValueInput.value = beerValue;
 	payerCountInput.value = payerCount;
+	updateBeerTypeSourceToRelativePath();
 	updateGraphicBeerTypes();
 	updateBeerValuePerPayer();
 	updateGraphicBeerCount();
