@@ -37,6 +37,7 @@ function updateGraphicBeerTypes() {
 }
 
 function updateBeerType(source) {
+	beerType = source;
 	updateBeerTypeSourceToRelativePath();
 	localStorage.setItem('beerType', beerType);
 	for (let beerTypeButton of beerTypeButtons) {
