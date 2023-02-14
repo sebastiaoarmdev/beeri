@@ -1,3 +1,5 @@
+'use strict';
+
 var beerTypes = [
 	'images/bottle.png',
 	'images/can.png', 
