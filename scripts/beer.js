@@ -1,3 +1,5 @@
+'use strict';
+
 const beerTypes = [
 	'images/bottle.png',
 	'images/can.png', 
@@ -41,9 +43,9 @@ class Beer {
         }
     }    
 
-    constructor($value, $type) {
-        this.value = $value;
-        this.type = $type;
+    constructor(value, type) {
+        this.value = value;
+        this.type = type;
     }
 }
 
@@ -58,8 +60,8 @@ class Payer {
         this.#count = parseInt(newValue);
     }
 
-    constructor($count) {
-       this.count = $count;
+    constructor(count) {
+       this.count = count;
     }
 }
 
@@ -116,9 +118,17 @@ class BeerCounter {
         return this.valueByPayer.toLocaleString('pt-br', localeStringOptions);
     }
 
-    constructor($count, $beer, $payer) {
-       this.count = $count;
-       this.beer = $beer;
-       this.payer = $payer;
+    constructor(count, beer, payer) {
+       this.count = count;
+       this.beer = beer;
+       this.payer = payer;
+    }
+
+    save() {
+        //...
+    }
+
+    load() {
+        //...
     }
 }
