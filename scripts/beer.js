@@ -6,6 +6,11 @@ const beerTypes = [
 	'images/mug.png'
 ];
 
+const localeStringOptions = {
+    style: 'currency', 
+    currency: 'BRL'
+};
+
 class Beer {
     #value;
     #type;
@@ -19,7 +24,7 @@ class Beer {
     }
 
     get formattedValue() {
-        return this.value.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
+        return this.value.toLocaleString('pt-br', localeStringOptions);
     }
 
     get type() {
@@ -100,7 +105,7 @@ class BeerCounter {
     }
 
     get formattedTotalValue() {
-        return this.totalValue.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
+        return this.totalValue.toLocaleString('pt-br', localeStringOptions);
     }
 
     get valueByPayer() {
@@ -108,7 +113,7 @@ class BeerCounter {
     }
 
     get formattedValueByPayer() {
-        return this.valueByPayer.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
+        return this.valueByPayer.toLocaleString('pt-br', localeStringOptions);
     }
 
     constructor($count, $beer, $payer) {
