@@ -1,14 +1,15 @@
-var beerValue = parseFloat(localStorage.getItem('beerValue') ? localStorage.getItem('beerValue') : 0.0);
-var payerCount = parseInt(localStorage.getItem('payerCount') ? localStorage.getItem('payerCount') : 1);
-var beerCount = parseInt(localStorage.getItem('beerCount') ? localStorage.getItem('beerCount') : 0);
-var beerTotalValue = beerValue * beerCount;
-var formattedBeerTotalValue = beerTotalValue.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
 var beerTypes = [
 	'images/bottle.png',
 	'images/can.png', 
 	'images/drink.png', 
 	'images/glass.png', 
-	'images/mug.png'];
+	'images/mug.png'
+];
+var beerValue = parseFloat(localStorage.getItem('beerValue') ? localStorage.getItem('beerValue') : 0.0);
+var payerCount = parseInt(localStorage.getItem('payerCount') ? localStorage.getItem('payerCount') : 1);
+var beerCount = parseInt(localStorage.getItem('beerCount') ? localStorage.getItem('beerCount') : 0);
+var beerTotalValue = beerValue * beerCount;
+var formattedBeerTotalValue = beerTotalValue.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
 var beerType = localStorage.getItem('beerType') ? localStorage.getItem('beerType') : beerTypes[0];
 var beerValuePerPayer = beerTotalValue / payerCount;
 var formattedBeerValuePerPayer = beerValuePerPayer.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
@@ -19,26 +20,22 @@ const minusButton = document.getElementById('minusButton');
 const plusButton = document.getElementById('plusButton');
 const beerTypeButtons = document.getElementById('graphicBeerTypes').getElementsByClassName('button');
 
-function updateBeerTypeSourceToRelativePath() {
-	let $beerType = beerType.replace(location.href, '');
-	let fileName = location.href.split("/").pop();
-	let extraPath = location.href.replace(fileName, '');
-	$beerType = $beerType.replace(extraPath, '');
-	beerType = $beerType;
-}
-
 function updateGraphicBeerTypes() {
 	let html = '';
-	for (let source of beerTypes) {
-		let status = (beerType == source) ? 'on' : 'off';
-		html = html + `<img src="${source}" class="button ${status}">`;
+	for (let $beerType of beerTypes) {
+		let status = (beerType == $beerType) ? 'on' : 'off';
+		html = html + `<img src="${$beerType}" class="button ${status}">`;
 	}
 	document.getElementById('graphicBeerTypes').innerHTML = html;
 }
 
 function updateBeerType(source) {
-	beerType = source;
-	updateBeerTypeSourceToRelativePath();
+	for (let $beerType of beerTypes) {
+		if (source.includes($beerType)) {
+			beerType = $beerType;
+			break;
+		}
+	}
 	localStorage.setItem('beerType', beerType);
 	for (let beerTypeButton of beerTypeButtons) {
 		if (beerTypeButton.src == source) {
@@ -47,9 +44,9 @@ function updateBeerType(source) {
 			beerTypeButton.classList.replace('on', 'off');
 		}
 	}
-	let beers = document.getElementsByClassName('graphicBeer');
-	for (let beer of beers) {
-		beer.src = source;
+	let graphicBeers = document.getElementsByClassName('graphicBeer');
+	for (let graphicBeer of graphicBeers) {
+		graphicBeer.src = source;
 	}
 }
 
@@ -111,7 +108,6 @@ function updatePayerCount(newValue) {
 function start() {
 	beerValueInput.value = beerValue;
 	payerCountInput.value = payerCount;
-	updateBeerTypeSourceToRelativePath();
 	updateGraphicBeerTypes();
 	updateBeerValuePerPayer();
 	updateGraphicBeerCount();
